@@ -1,8 +1,7 @@
 #include "sensors.h"
 #include <Adafruit_SCD30.h>
 #include <Arduino.h>
-#include <Arduino_LSM6DS3.h> // Keep if IMU is used
-
+#include <Arduino_LSM6DS3.h> // IMU library
 
 // --- ENCODER setup ---
 // Left wheel encoder digital pins
@@ -32,6 +31,11 @@ double speed_R = 0.0;
 const int T = 1000;
 long t_now = 0;
 long t_last = 0;
+
+// --- IMU LSM6DS3 setup ---
+float omega_x, omega_y, omega_z;
+float a_x, a_y, a_z;
+float a_f, g_f;
 
 // --- SCD30 setup ---
 Adafruit_SCD30 scd;
@@ -91,6 +95,19 @@ void initSensors() {
     scd.setMeasurementInterval(2);
   }
 
+  // 3. Initialize IMU
+  if (!IMU.begin()) {
+    Serial.println("Failed to initialize IMU :(");
+  } else {
+    a_f = IMU.accelerationSampleRate();
+    g_f = IMU.gyroscopeSampleRate();
+    Serial.print("IMU Sample rate: Accel=");
+    Serial.print(a_f);
+    Serial.print(" Hz, Gyro=");
+    Serial.print(g_f);
+    Serial.println(" Hz");
+  }
+
   // (Sharp sensors just need analogRead, no init requried)
 }
 
@@ -126,7 +143,7 @@ void readSCD30() {
 
 void readSharpSensors() {
   Serial.print("Sharp array: ");
-  for (int i = 0; i < NUM_SENSORS; i++) {
+  for (int i = 0_SENSORS; i < NUM_SENSORS; i++) {
     float distance = getDistance(SENSOR_PINS[i]);
     Serial.print("[S");
     Serial.print(i);
@@ -135,6 +152,34 @@ void readSharpSensors() {
     Serial.print("cm] ");
   }
   Serial.println();
+}
+
+void readIMU() {
+  // Read from the accelerometer
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(a_x, a_y, a_z);
+
+    Serial.print("IMU Accel: ");
+    Serial.print(a_x + 0.01);
+    Serial.print("\t");
+    Serial.print(a_y + 0.02);
+    Serial.print("\t");
+    Serial.print(a_z - 0.01);
+    Serial.print(" g\t");
+  }
+
+  // Read from the gyroscope
+  if (IMU.gyroscopeAvailable()) {
+    IMU.readGyroscope(omega_x, omega_y, omega_z);
+
+    Serial.print("Gyro: ");
+    Serial.print(omega_x - 0.06);
+    Serial.print("\t");
+    Serial.print(omega_y + 0.06);
+    Serial.print("\t");
+    Serial.print(omega_z - 0.12);
+    Serial.println(" deg/s");
+  }
 }
 
 void updateSensors() {
@@ -171,4 +216,10 @@ void updateSensors() {
 
   // SCD30 checks if data is ready on its own polling cycle
   readSCD30();
+
+  // Depending on IMU polling rate vs print flood, you may want to throttle this
+  // The user's original code had a 100ms delay in loop.
+  // We'll read it every loop, but keep in mind Serial.print might overwhelm
+  // unless managed down the line.
+  readIMU();
 }
