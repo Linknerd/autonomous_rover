@@ -88,7 +88,7 @@ void initSensors() {
 
   // 2. Initialize SCD30
   if (!scd.begin()) {
-    Serial.println("SCD30 Sensor not found :(");
+    Serial.println("E,SCD30 Sensor not found");
     // We will not block here forever, just let ROS know via serial eventually
   } else {
     // Set the measurement interval [2-1800 s]
@@ -97,15 +97,11 @@ void initSensors() {
 
   // 3. Initialize IMU
   if (!IMU.begin()) {
-    Serial.println("Failed to initialize IMU :(");
+    Serial.println("E,Failed to initialize IMU");
   } else {
     a_f = IMU.accelerationSampleRate();
     g_f = IMU.gyroscopeSampleRate();
-    Serial.print("IMU Sample rate: Accel=");
-    Serial.print(a_f);
-    Serial.print(" Hz, Gyro=");
-    Serial.print(g_f);
-    Serial.println(" Hz");
+    // Removed IMU sample rate print statements
   }
 
   // (Sharp sensors just need analogRead, no init requried)
@@ -125,60 +121,50 @@ void readSCD30() {
   // The SCD30 will report when it is ready.
   if (scd.dataReady()) {
     if (!scd.read()) {
-      Serial.println("Error reading SCD30 sensor data");
+      Serial.println("E,Error reading SCD30");
       return;
     }
 
-    Serial.print("SCD30 Temp: ");
+    // Format: C,temp,humidity,co2
+    Serial.print("C,");
     Serial.print(scd.temperature);
-    Serial.print(" dC\t");
-    Serial.print("RH: ");
+    Serial.print(",");
     Serial.print(scd.relative_humidity);
-    Serial.print(" %\t");
-    Serial.print("CO2: ");
-    Serial.print(scd.CO2, 3);
-    Serial.println(" ppm");
+    Serial.print(",");
+    Serial.println(scd.CO2, 3);
   }
 }
 
 void readSharpSensors() {
-  Serial.print("Sharp array: ");
-  for (int i = 0_SENSORS; i < NUM_SENSORS; i++) {
+  // Format: S,dist0,dist1,dist2
+  Serial.print("S");
+  for (int i = 0; i < NUM_SENSORS; i++) {
     float distance = getDistance(SENSOR_PINS[i]);
-    Serial.print("[S");
-    Serial.print(i);
-    Serial.print(":");
+    Serial.print(",");
     Serial.print(distance);
-    Serial.print("cm] ");
   }
   Serial.println();
 }
 
 void readIMU() {
-  // Read from the accelerometer
-  if (IMU.accelerationAvailable()) {
+  // Read from the accelerometer and gyroscope
+  if (IMU.accelerationAvailable() && IMU.gyroscopeAvailable()) {
     IMU.readAcceleration(a_x, a_y, a_z);
-
-    Serial.print("IMU Accel: ");
-    Serial.print(a_x + 0.01);
-    Serial.print("\t");
-    Serial.print(a_y + 0.02);
-    Serial.print("\t");
-    Serial.print(a_z - 0.01);
-    Serial.print(" g\t");
-  }
-
-  // Read from the gyroscope
-  if (IMU.gyroscopeAvailable()) {
     IMU.readGyroscope(omega_x, omega_y, omega_z);
 
-    Serial.print("Gyro: ");
+    // Format: I,ax,ay,az,gx,gy,gz
+    Serial.print("I,");
+    Serial.print(a_x + 0.01);
+    Serial.print(",");
+    Serial.print(a_y + 0.02);
+    Serial.print(",");
+    Serial.print(a_z - 0.01);
+    Serial.print(",");
     Serial.print(omega_x - 0.06);
-    Serial.print("\t");
+    Serial.print(",");
     Serial.print(omega_y + 0.06);
-    Serial.print("\t");
-    Serial.print(omega_z - 0.12);
-    Serial.println(" deg/s");
+    Serial.print(",");
+    Serial.println(omega_z - 0.12);
   }
 }
 
@@ -199,12 +185,11 @@ void updateSensors() {
     // Record the current time [ms]
     t_last = t_now;
 
-    Serial.print("Encoders -> Speed: ");
+    // Format: O,speed,rotation
+    Serial.print("O,");
     Serial.print(compute_vehicle_speed(speed_L, speed_R));
-    Serial.print("\t");
-    Serial.print("Rotation: ");
-    Serial.print(compute_vehicle_rate(speed_L, speed_R));
-    Serial.print("\n");
+    Serial.print(",");
+    Serial.println(compute_vehicle_rate(speed_L, speed_R));
 
     // Reset the encoder ticks counters
     encoder_ticksL = 0;

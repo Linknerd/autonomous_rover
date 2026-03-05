@@ -7,22 +7,37 @@ void setup() {
   Serial.begin(9600); // Changed to 9600 to match user code
   initMovement();
   initSensors();
-  Serial.print("Program initialized.\n");
+  Serial.println("I,Program initialized.");
 }
 
 void loop() {
-  // 1. Calculate speeds and handle encooder timings
+  // 1. Calculate speeds and handle encoder timings, outputs via CSV
   updateSensors();
 
   // 2. Read from serial if ROS2 sends commands
   if (Serial.available()) {
-    // Process incoming ROS2 commands (e.g., speed, turn rate)
-    // For now we will just read them out to clear the buffer
-    String cmd = Serial.readStringUntil('\n');
-    Serial.print("Received: ");
-    Serial.println(cmd);
+    String cmd = Serial.readStringUntil('\n'); // Read line until newline
+
+    // Protocol Ex: M,left_pwm,right_pwm\n
+    if (cmd.startsWith("M,")) {
+      int firstComma = cmd.indexOf(',');
+      int secondComma = cmd.indexOf(',', firstComma + 1);
+
+      if (firstComma != -1 && secondComma != -1) {
+        String leftPWM_str = cmd.substring(firstComma + 1, secondComma);
+        String rightPWM_str = cmd.substring(secondComma + 1);
+
+        int leftPWM = leftPWM_str.toInt();
+        int rightPWM = rightPWM_str.toInt();
+
+        move_motors(leftPWM, rightPWM);
+      }
+    } else if (cmd.startsWith("S\n")) {
+      // Maybe Stop command
+      stopMovement();
+    }
   }
 
-  // 3. For testing right now, just drive motors at a constant PWM like in the
-  // original code u = 128; moveForward(u);
+  // Delay tightly for stability like original IMU code indicated
+  delay(10);
 }
