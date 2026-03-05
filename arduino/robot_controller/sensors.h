@@ -3,5 +3,7 @@
 
 void initSensors();
 void updateSensors();
+void readSCD30();
+void readSharpSensors();
 
 #endif
