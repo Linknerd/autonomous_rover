@@ -202,9 +202,5 @@ void updateSensors() {
   // SCD30 checks if data is ready on its own polling cycle
   readSCD30();
 
-  // Depending on IMU polling rate vs print flood, you may want to throttle this
-  // The user's original code had a 100ms delay in loop.
-  // We'll read it every loop, but keep in mind Serial.print might overwhelm
-  // unless managed down the line.
   readIMU();
 }
