@@ -1,58 +1,183 @@
 #include "movement.h"
 #include <Arduino.h>
 
-// Wheel PWM pins
-const int EA = 9;
-const int EB = 11;
 
-// Wheel direction digital pins
-const int I1 = 8;
-const int I2 = 10;
-const int I3 = 13;
-const int I4 = 12;
+float vd = 0.5;   
+float wd = 4.0;   
 
-void initMovement() {
-  // Set the pin modes for the motor driver
-  pinMode(EA, OUTPUT);
-  pinMode(I1, OUTPUT);
-  pinMode(I2, OUTPUT);
-  pinMode(EB, OUTPUT);
-  pinMode(I3, OUTPUT);
-  pinMode(I4, OUTPUT);
+
+volatile long encoder_ticksL = 0;
+volatile long encoder_ticksR = 0;
+
+
+static double omega_L  = 0.0;
+static double omega_R  = 0.0;
+static double speed_L  = 0.0;
+static double speed_R  = 0.0;
+
+static double errorAL  = 0.0;   
+static double errorAR  = 0.0;   
+
+static short  inLeft   = 0;
+static short  inRight  = 0;
+
+static long   t_last   = 0;
+
+void movement_setup()
+{
+    // Motor driver pins
+    pinMode(EA, OUTPUT);
+    pinMode(EB, OUTPUT);
+    pinMode(I1, OUTPUT);
+    pinMode(I2, OUTPUT);
+    pinMode(I3, OUTPUT);
+    pinMode(I4, OUTPUT);
+
+    // Encoder input pins
+    pinMode(SIGNAL_A, INPUT);
+    pinMode(SIGNAL_B, INPUT);
+    pinMode(SIGNAL_C, INPUT);
+    pinMode(SIGNAL_D, INPUT);
+
+    // Attach interrupts for encoder counting
+    attachInterrupt(digitalPinToInterrupt(SIGNAL_A), ISR_encoderL, RISING);
+    attachInterrupt(digitalPinToInterrupt(SIGNAL_B), ISR_encoderR, RISING);
+
+    t_last = millis();
 }
 
-void move_motors(int leftPWM, int rightPWM) {
-  if (leftPWM > 0) {
-    digitalWrite(I1, LOW);
-    digitalWrite(I2, HIGH);
-  } else if (leftPWM < 0) {
-    digitalWrite(I1, HIGH);
-    digitalWrite(I2, LOW);
-  } else {
-    digitalWrite(I1, LOW);
-    digitalWrite(I2, LOW);
-  }
 
-  if (rightPWM > 0) {
-    digitalWrite(I3, LOW);
-    digitalWrite(I4, HIGH);
-  } else if (rightPWM < 0) {
-    digitalWrite(I3, HIGH);
-    digitalWrite(I4, LOW);
-  } else {
-    digitalWrite(I3, LOW);
-    digitalWrite(I4, LOW);
-  }
 
-  // Write to motor
-  analogWrite(EA, abs(leftPWM));
-  analogWrite(EB, abs(rightPWM));
+
+void ISR_encoderL()
+{
+    
+    if (digitalRead(SIGNAL_C) == HIGH) {
+        encoder_ticksL++;
+    } else {
+        encoder_ticksL--;
+    }
 }
 
-void moveForward(int speed) { move_motors(speed, speed); }
 
-void stopMovement() { move_motors(0, 0); }
+void ISR_encoderR()
+{
+    if (digitalRead(SIGNAL_D) == HIGH) {
+        encoder_ticksR++;
+    } else {
+        encoder_ticksR--;
+    }
+}
 
-void turnLeft(int speed) { move_motors(-speed, speed); }
 
-void turnRight(int speed) { move_motors(speed, -speed); }
+double compute_vehicle_speed(double speed_L, double speed_R)
+{
+    return 0.5 * (speed_L + speed_R);
+}
+
+double compute_vehicle_rate(double speed_L, double speed_R)
+{
+    return (1.0 / ELL) * (speed_R - speed_L);
+}
+
+
+double compute_leftd()
+{
+    return vd - (wd * ELL) / 2.0;
+}
+
+
+double compute_rightd()
+{
+    return vd + (wd * ELL) / 2.0;
+}
+
+
+short PI_controller(double e_now, double e_int, double kP, double kI)
+{
+    long u = (long)(kP * e_now + kI * e_int);
+
+    if      (u >  255) u =  255;
+    else if (u < -255) u = -255;
+
+    return (short)u;
+}
+
+
+void motor_write(short left, short right)
+{
+
+    if (abs(left) < DEADZONE) {
+        digitalWrite(I1, HIGH);
+        digitalWrite(I2, HIGH);
+        analogWrite(EA, 255);
+    } else if (left > 0) {
+        digitalWrite(I1, LOW);
+        digitalWrite(I2, HIGH);
+        analogWrite(EA, left);
+    } else {
+        digitalWrite(I1, HIGH);
+        digitalWrite(I2, LOW);
+        analogWrite(EA, -left);
+    }
+    if (abs(right) < DEADZONE) {
+        digitalWrite(I3, HIGH);
+        digitalWrite(I4, HIGH);
+        analogWrite(EB, 255);
+    } else if (right > 0) {
+        digitalWrite(I3, LOW);
+        digitalWrite(I4, HIGH);
+        analogWrite(EB, right);
+    } else {
+        digitalWrite(I3, HIGH);
+        digitalWrite(I4, LOW);
+        analogWrite(EB, -right);
+    }
+}
+
+
+void PID()
+{
+    long t_now = millis();
+
+    if (t_now - t_last >= T)
+    {
+        double dt = (double)(t_now - t_last);   // [ms]
+
+        // Snapshot and reset encoder counters atomically
+        noInterrupts();
+        long ticksL = encoder_ticksL;
+        long ticksR = encoder_ticksR;
+        encoder_ticksL = 0;
+        encoder_ticksR = 0;
+        interrupts();
+
+        // Angular velocities [rad/s]
+        omega_L = 2.0 * PI * ((double)ticksL / (double)TPR) * 1000.0 / dt;
+        omega_R = 2.0 * PI * ((double)ticksR / (double)TPR) * 1000.0 / dt;
+
+        // Linear wheel speeds [m/s]
+        speed_L = omega_L * RHO;
+        speed_R = omega_R * RHO;
+
+        t_last = t_now;
+
+        // Desired wheel speeds
+        double leftVd  = compute_leftd();
+        double rightVd = compute_rightd();
+
+        // Speed errors
+        double error_left  = leftVd  - speed_L;
+        double error_right = rightVd - speed_R;
+
+        // PI control outputs
+        inLeft  = PI_controller(error_left,  errorAL, k_P, k_I);
+        inRight = PI_controller(error_right, errorAR, k_P, k_I);
+
+        // Accumulate integral (convert T from ms to s)
+        errorAL += error_left  * (dt / 1000.0);
+        errorAR += error_right * (dt / 1000.0);
+    }
+
+    motor_write(inLeft, inRight);
+  }
