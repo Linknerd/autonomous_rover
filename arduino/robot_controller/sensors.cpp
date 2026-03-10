@@ -113,17 +113,8 @@ void updateSensors() {
   // Get the elapsed time [ms]
   t_now = millis();
 
-  // Encoders are read every T milliseconds
+  // Print sensor values at the same interval as the PID loop
   if (t_now - t_last >= T) {
-    // Estimate the rotational speed [rad/s]
-    omega_L = 2.0 * PI * ((double)encoder_ticksL / (double)TPR) * 1000.0 /
-              (double)(t_now - t_last);
-    omega_R = 2.0 * PI * ((double)encoder_ticksR / (double)TPR) * 1000.0 /
-              (double)(t_now - t_last);
-    speed_L = omega_L * RHO;
-    speed_R = omega_R * RHO;
-
-    // Record the current time [ms]
     t_last = t_now;
 
     // Format: O,speed,rotation
@@ -131,10 +122,6 @@ void updateSensors() {
     Serial.print(compute_vehicle_speed(speed_L, speed_R));
     Serial.print(",");
     Serial.println(compute_vehicle_rate(speed_L, speed_R));
-
-    // Reset the encoder ticks counters
-    encoder_ticksL = 0;
-    encoder_ticksR = 0;
 
     // Also print Sharp sensors at this interval
     readSharpSensors();

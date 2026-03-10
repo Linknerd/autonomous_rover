@@ -20,10 +20,10 @@ const byte SIGNAL_C = 4;  // Left wheel  - direction pin
 const byte SIGNAL_D = 5;  // Right wheel - direction pin
 
 
-static double omega_L  = 0.0;
-static double omega_R  = 0.0;
-static double speed_L  = 0.0;
-static double speed_R  = 0.0;
+extern double omega_L;
+extern double omega_R;
+extern double speed_L;
+extern double speed_R;
 
 const int TPR = 3000;
 

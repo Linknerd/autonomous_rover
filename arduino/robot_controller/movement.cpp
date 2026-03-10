@@ -2,14 +2,20 @@
 #include <Arduino.h>
 
 
-float vd = 0.5;   
-float wd = 4.0;   
+float vd = 0.5;
+float wd = 4.0;
 
-extern volatile long encoder_ticksL = 0;
-extern volatile long encoder_ticksR = 0;
+volatile long encoder_ticksL = 0;
+volatile long encoder_ticksR = 0;
 
-static double errorAL  = 0.0;   
-static double errorAR  = 0.0;   
+// Shared state (updated by PID, read by sensors)
+double omega_L = 0.0;
+double omega_R = 0.0;
+double speed_L = 0.0;
+double speed_R = 0.0;
+
+static double errorAL  = 0.0;
+static double errorAR  = 0.0;
 
 static short  inLeft   = 0;
 static short  inRight  = 0;
