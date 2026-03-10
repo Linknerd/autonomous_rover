@@ -20,6 +20,11 @@ const byte SIGNAL_C = 4;  // Left wheel  - direction pin
 const byte SIGNAL_D = 5;  // Right wheel - direction pin
 
 
+static double omega_L  = 0.0;
+static double omega_R  = 0.0;
+static double speed_L  = 0.0;
+static double speed_R  = 0.0;
+
 const int TPR = 3000;
 
 const double RHO = 0.0625;
@@ -31,7 +36,7 @@ const int T = 50;
 const int DEADZONE = 40;
 
 const short k_P = 200;
-const short k_I = 0.5 * k_P;─
+const short k_I = 0.5 * k_P;
 
 extern float vd;   
 extern float wd;   

@@ -1,34 +1,10 @@
 #include "sensors.h"
+#include "movement.h"
 #include <Adafruit_SCD30.h>
 #include <Arduino.h>
 #include <Arduino_LSM6DS3.h> // IMU library
 
-// --- ENCODER setup ---
-// Left wheel encoder digital pins
-const byte SIGNAL_A = 2;
-const byte SIGNAL_B = 3;
-const byte SIGNAL_C = 4;
-const byte SIGNAL_D = 5;
 
-// Encoder ticks per (motor) revolution (TPR)
-const int TPR = 3000;
-
-// Wheel radius [m]
-const double RHO = 0.0625;
-const double ELL = 0.2775;
-
-// Counter to keep track of encoder ticks [integer]
-volatile long encoder_ticksL = 0;
-volatile long encoder_ticksR = 0;
-
-// Variables to store estimated rates
-double omega_L = 0.0;
-double omega_R = 0.0;
-double speed_L = 0.0;
-double speed_R = 0.0;
-
-// Sampling interval for measurements in milliseconds
-const int T = 1000;
 long t_now = 0;
 long t_last = 0;
 
@@ -59,33 +35,8 @@ float getDistance(byte pin) {
   return AD_COEFF * pow(voltage, AD_EXPONENT);
 }
 
-// --- Interrupt Service Routines ---
-void decodeLEncoderTicks() {
-  if (digitalRead(SIGNAL_B) == LOW) {
-    encoder_ticksL++;
-  } else {
-    encoder_ticksL--;
-  }
-}
-
-void decodeREncoderTicks() {
-  if (digitalRead(SIGNAL_D) == LOW) {
-    encoder_ticksR--;
-  } else {
-    encoder_ticksR++;
-  }
-}
 
 void initSensors() {
-  // 1. Set the pin modes for the encoders
-  pinMode(SIGNAL_A, INPUT);
-  pinMode(SIGNAL_B, INPUT);
-  pinMode(SIGNAL_C, INPUT);
-  pinMode(SIGNAL_D, INPUT);
-  // Attach interrupts
-  attachInterrupt(digitalPinToInterrupt(SIGNAL_A), decodeLEncoderTicks, RISING);
-  attachInterrupt(digitalPinToInterrupt(SIGNAL_C), decodeREncoderTicks, RISING);
-
   // 2. Initialize SCD30
   if (!scd.begin()) {
     Serial.println("E,SCD30 Sensor not found");
@@ -105,16 +56,6 @@ void initSensors() {
   }
 
   // (Sharp sensors just need analogRead, no init requried)
-}
-
-// Compute vehicle speed [m/s]
-double compute_vehicle_speed(double s_L, double s_R) {
-  return 0.5 * (s_L + s_R);
-}
-
-// Compute vehicle turning rate [rad/s]
-double compute_vehicle_rate(double s_L, double s_R) {
-  return 1.0 / ELL * (s_R - s_L);
 }
 
 void readSCD30() {

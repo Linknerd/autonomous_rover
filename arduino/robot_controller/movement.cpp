@@ -5,15 +5,8 @@
 float vd = 0.5;   
 float wd = 4.0;   
 
-
-volatile long encoder_ticksL = 0;
-volatile long encoder_ticksR = 0;
-
-
-static double omega_L  = 0.0;
-static double omega_R  = 0.0;
-static double speed_L  = 0.0;
-static double speed_R  = 0.0;
+extern volatile long encoder_ticksL = 0;
+extern volatile long encoder_ticksR = 0;
 
 static double errorAL  = 0.0;   
 static double errorAR  = 0.0;   
