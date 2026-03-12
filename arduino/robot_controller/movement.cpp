@@ -137,6 +137,7 @@ void motor_write(short left, short right)
 
 void PID()
 {
+    delay(50);
     long t_now = millis();
 
     if (t_now - t_last >= T)
@@ -151,6 +152,12 @@ void PID()
         encoder_ticksR = 0;
         interrupts();
 
+        // Debug: show raw ticks per interval (should be non-zero when wheels move)
+        Serial.print("D,");
+        Serial.print(ticksL);
+        Serial.print(",");
+        Serial.println(ticksR);
+
         // Angular velocities [rad/s]
         omega_L = 2.0 * PI * ((double)ticksL / (double)TPR) * 1000.0 / dt;
         omega_R = 2.0 * PI * ((double)ticksR / (double)TPR) * 1000.0 / dt;
@@ -161,6 +168,7 @@ void PID()
 
         t_last = t_now;
 
+        
         // Desired wheel speeds
         double leftVd  = compute_leftd();
         double rightVd = compute_rightd();
@@ -169,14 +177,14 @@ void PID()
         double error_left  = leftVd  - speed_L;
         double error_right = rightVd - speed_R;
 
+        // Accumulate integral (convert T from ms to s)
+        errorAL += error_left  * (dt / 1000.0);
+        errorAR += error_right * (dt / 1000.0);
+
         // PI control outputs
         inLeft  = PI_controller(error_left,  errorAL, k_P, k_I);
         inRight = PI_controller(error_right, errorAR, k_P, k_I);
 
-        // Accumulate integral (convert T from ms to s)
-        errorAL += error_left  * (dt / 1000.0);
-        errorAR += error_right * (dt / 1000.0);
+        motor_write(inLeft, inRight);
     }
-
-    motor_write(inLeft, inRight);
   }
