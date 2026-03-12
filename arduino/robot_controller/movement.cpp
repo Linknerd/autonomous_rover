@@ -2,8 +2,8 @@
 #include <Arduino.h>
 
 
-float vd = 0.5;
-float wd = 4.0;
+float vd = 0.0;
+float wd = 0.0;
 
 volatile long encoder_ticksL = 0;
 volatile long encoder_ticksR = 0;
@@ -46,11 +46,15 @@ void movement_setup()
 }
 
 
+void reset_integrators()
+{
+    errorAL = 0.0;
+    errorAR = 0.0;
+}
 
 
 void ISR_encoderL()
 {
-    
     if (digitalRead(SIGNAL_C) == HIGH) {
         encoder_ticksL++;
     } else {
@@ -105,7 +109,6 @@ short PI_controller(double e_now, double e_int, double kP, double kI)
 
 void motor_write(short left, short right)
 {
-
     if (abs(left) < DEADZONE) {
         digitalWrite(I1, HIGH);
         digitalWrite(I2, HIGH);
@@ -119,6 +122,7 @@ void motor_write(short left, short right)
         digitalWrite(I2, LOW);
         analogWrite(EA, -left);
     }
+
     if (abs(right) < DEADZONE) {
         digitalWrite(I3, HIGH);
         digitalWrite(I4, HIGH);
@@ -137,7 +141,6 @@ void motor_write(short left, short right)
 
 void PID()
 {
-    delay(50);
     long t_now = millis();
 
     if (t_now - t_last >= T)
@@ -152,12 +155,6 @@ void PID()
         encoder_ticksR = 0;
         interrupts();
 
-        // Debug: show raw ticks per interval (should be non-zero when wheels move)
-        Serial.print("D,");
-        Serial.print(ticksL);
-        Serial.print(",");
-        Serial.println(ticksR);
-
         // Angular velocities [rad/s]
         omega_L = 2.0 * PI * ((double)ticksL / (double)TPR) * 1000.0 / dt;
         omega_R = 2.0 * PI * ((double)ticksR / (double)TPR) * 1000.0 / dt;
@@ -168,7 +165,6 @@ void PID()
 
         t_last = t_now;
 
-        
         // Desired wheel speeds
         double leftVd  = compute_leftd();
         double rightVd = compute_rightd();
@@ -177,14 +173,19 @@ void PID()
         double error_left  = leftVd  - speed_L;
         double error_right = rightVd - speed_R;
 
-        // Accumulate integral (convert T from ms to s)
-        errorAL += error_left  * (dt / 1000.0);
-        errorAR += error_right * (dt / 1000.0);
-
         // PI control outputs
         inLeft  = PI_controller(error_left,  errorAL, k_P, k_I);
         inRight = PI_controller(error_right, errorAR, k_P, k_I);
 
-        motor_write(inLeft, inRight);
+        // Accumulate integral (convert dt from ms to s)
+        errorAL += error_left  * (dt / 1000.0);
+        errorAR += error_right * (dt / 1000.0);
+
+        // Clamp integral to prevent windup
+        const double INT_MAX_VAL = 1.0;
+        errorAL = constrain(errorAL, -INT_MAX_VAL, INT_MAX_VAL);
+        errorAR = constrain(errorAR, -INT_MAX_VAL, INT_MAX_VAL);
     }
-  }
+
+    motor_write(inLeft, inRight);
+}
