@@ -36,15 +36,16 @@ const int T = 50;
 const int DEADZONE = 40;
 
 const short k_P = 200;
-const short k_I = 0.5 * k_P;
+const short k_I = 100;
 
-extern float vd;   
-extern float wd;   
+extern float vd;
+extern float wd;
 
 extern volatile long encoder_ticksL;
 extern volatile long encoder_ticksR;
 
 void movement_setup();
+void reset_integrators();
 
 double compute_vehicle_speed(double speed_L, double speed_R);
 double compute_vehicle_rate(double speed_L, double speed_R);
@@ -55,8 +56,7 @@ short PI_controller(double e_now, double e_int, double kP, double kI);
 void  motor_write(short left, short right);
 void  PID();
 
-
 void ISR_encoderL();
 void ISR_encoderR();
 
-#endif 
+#endif
