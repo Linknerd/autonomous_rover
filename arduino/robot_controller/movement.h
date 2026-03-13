@@ -31,7 +31,7 @@ const double RHO = 0.0625;
 
 const double ELL = 0.2775;
 
-const int T = 50;
+const int T = 100;
 
 const int DEADZONE = 40;
 
