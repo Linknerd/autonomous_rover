@@ -67,12 +67,12 @@ void readSCD30() {
     }
 
     // Format: C,temp,humidity,co2
-    Serial.print("C,");
-    Serial.print(scd.temperature);
-    Serial.print(",");
-    Serial.print(scd.relative_humidity);
-    Serial.print(",");
-    Serial.println(scd.CO2, 3);
+    //Serial.print("C,");
+    //Serial.print(scd.temperature);
+    //Serial.print(",");
+    //Serial.print(scd.relative_humidity);
+    //Serial.print(",");
+    //Serial.println(scd.CO2, 3);
   }
 }
 
@@ -115,16 +115,21 @@ void updateSensors() {
 
   // Print sensor values at the same interval as the PID loop
   if (t_now - t_last >= T) {
-    t_last = t_now;
-
-    // Format: O,speed,rotation
+    
     Serial.print("O,");
     Serial.print(compute_vehicle_speed(speed_L, speed_R));
     Serial.print(",");
     Serial.println(compute_vehicle_rate(speed_L, speed_R));
 
-    // Also print Sharp sensors at this interval
-    readSharpSensors();
+    // Format: O,speed,rotation
+    static int sharp_counter = 0;
+    sharp_counter++;
+    if (sharp_counter >= 5) {
+      readSharpSensors();
+      sharp_counter = 0;   
+    }
+
+    t_last = t_now;
   }
 
   // SCD30 checks if data is ready on its own polling cycle
