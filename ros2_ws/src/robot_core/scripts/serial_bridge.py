@@ -38,7 +38,7 @@ class SerialBridge(Node):
 
         # ── Serial ───────────────────────────────────────────────────────────
         self.port     = '/dev/ttyACM0'
-        self.baudrate = 9600
+        self.baudrate = 115200
         try:
             self.ser = serial.Serial(self.port, self.baudrate, timeout=1.0)
             self.get_logger().info(f'Connected to Arduino on {self.port}')

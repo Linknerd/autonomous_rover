@@ -2,14 +2,23 @@ import pygame
 import serial
 import time
 import sys
+import threading
 
 # Windows usually uses COM ports (e.g., 'COM3'). Update this to your Arduino's port.
-SERIAL_PORT = 'COM3'
+SERIAL_PORT = '/dev/ttyACM0'
 BAUD_RATE = 115200
 
 # Rover maximum velocities
 MAX_VD = 1.0  # Max linear velocity (example: 1.0 m/s)
-MAX_WD = 1.0  # Max angular velocity (example: 1.0 rad/s)
+MAX_WD = 4.0  # Max angular velocity (example: 1.0 rad/s)
+
+def drain_serial(ser):
+    while True:
+        try:
+            if ser.in_waiting > 0:
+                ser.readline()
+        except:
+            break
 
 def main():
     # Initialize Pygame and Joystick
@@ -35,6 +44,10 @@ def main():
         print(f"Failed to connect to Serial Port {SERIAL_PORT}: {e}")
         print("Running in simulation mode (printing commands only).")
         ser = None
+
+    if ser:
+        drain_thread = threading.Thread(target=drain_serial, args=(ser,), daemon=True)
+        drain_thread.start()
 
     print("\n--- Controls ---")
     print("Right Trigger : Movement (Forward)")
