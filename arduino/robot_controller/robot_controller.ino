@@ -5,6 +5,8 @@ static String serialBuffer = "";
 
 void setup() {
   Serial.begin(115200);
+  delay(2000);
+  while(Serial.available()) Serial.read();
   movement_setup();
   initSensors();
   Serial.println("I,Program initialized.");
@@ -20,10 +22,15 @@ void processCommand(String cmd) {
     if (firstComma != -1 && secondComma != -1) {
       vd = cmd.substring(firstComma + 1, secondComma).toFloat();
       wd = cmd.substring(secondComma + 1).toFloat();
+      Serial.print("ACK_V, vd:");
+      Serial.print(vd);
+      Serial.print(" wd:");
+      Serial.println(wd);
     }
   } else if (cmd == "S") {
     vd = 0.0;
     wd = 0.0;
+    Serial.println("ACK_STOP");
   }
 }
 
