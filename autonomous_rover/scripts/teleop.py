@@ -56,24 +56,30 @@ def main():
 
     clock = pygame.time.Clock()
 
-    left_stick_x = 0.0
+    axes = {}
     left_trigger_pressed = False
     right_trigger_pressed = False
+    running = True
 
     try:
-        while True:
+        while running:
             # Handle Pygame events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    sys.exit()
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_x:
+                        running = False
                 elif event.type == pygame.JOYAXISMOTION:
-                    if event.axis == 0:
-                        left_stick_x = event.value
+                    axes[event.axis] = event.value
                 elif event.type == pygame.JOYBUTTONDOWN:
                     if event.button == 6:
                         left_trigger_pressed = True
                     elif event.button == 7:
                         right_trigger_pressed = True
+                    # Button 0 (DInput X) or 2 (XInput X) to stop
+                    elif event.button in (0, 2):
+                        running = False
                 elif event.type == pygame.JOYBUTTONUP:
                     if event.button == 6:
                         left_trigger_pressed = False
@@ -81,22 +87,45 @@ def main():
                         right_trigger_pressed = False
 
             # Define deadzones to prevent drift
-            DEADZONE = 0.1
-            clean_lx = left_stick_x if abs(left_stick_x) >= DEADZONE else 0.0
+            DEADZONE = 0.2
+            lx = axes.get(0, 0.0)
+            ly = axes.get(1, 0.0)
+            rx = axes.get(2, 0.0)
+            ry = axes.get(3, 0.0)
 
             # 1. Force Break (Left Trigger)
             if left_trigger_pressed:
                 cmd = "S\n"
             else:
-                # 2. Movement and Turning
-                # Right trigger controls forward linear velocity 'vd'
-                vd = MAX_VD if right_trigger_pressed else 0.0
-                
-                # Left joystick controls angular velocity 'wd'
-                # Assuming right = positive wd, left = negative wd
-                wd = clean_lx * MAX_WD
-                
-                # Format: "V,vd,wd"
+                vd = 0.0
+                wd = 0.0
+
+                # 2. Forward (Right Trigger)
+                if right_trigger_pressed:
+                    vd = 2.0
+                    wd = 0.0
+                else:
+                    # 3. Joystick logic
+                    # Right Joystick: diagonal movement
+                    if abs(ry) > DEADZONE and abs(rx) > DEADZONE:
+                        if ry < -DEADZONE: # Forward diagonally
+                            vd = 2.0
+                        elif ry > DEADZONE: # Reverse diagonally
+                            vd = -2.0
+                        wd = rx * MAX_WD
+                    # Left Joystick: Rotate on spot (only left/right)
+                    elif abs(lx) > DEADZONE and abs(ly) <= DEADZONE:
+                        vd = 0.0
+                        wd = lx * MAX_WD
+                    # Left Joystick: Forward/Back (only up/down)
+                    elif abs(ly) > DEADZONE and abs(lx) <= DEADZONE:
+                        if ly < -DEADZONE: # Forward
+                            vd = 2.0
+                        elif ly > DEADZONE: # Reverse
+                            vd = -2.0
+                        wd = 0.0
+
+                # Format Command
                 cmd = f"V,{vd:.2f},{wd:.2f}\n"
 
             # Send Command to Arduino
@@ -108,9 +137,14 @@ def main():
             clock.tick(20)
 
     except KeyboardInterrupt:
+        pass
+    finally:
         if ser:
-            ser.write(b"S\n")  # Stop rover before quitting
-            ser.close()
+            try:
+                ser.write(b"S\n")  # Stop rover before quitting
+                ser.close()
+            except:
+                pass
         print("\nExiting...")
         pygame.quit()
 
