@@ -10,7 +10,7 @@ BAUD_RATE = 115200
 
 # Rover maximum velocities
 MAX_VD = 1.0  # Max linear velocity (example: 1.0 m/s)
-MAX_WD = 4.0  # Max angular velocity (example: 1.0 rad/s)
+MAX_WD = 2.0  # Max angular velocity (example: 1.0 rad/s)
 
 def drain_serial(ser):
     while True:
