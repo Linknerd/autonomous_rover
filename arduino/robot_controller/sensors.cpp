@@ -1,3 +1,4 @@
+/*
 #include "sensors.h"
 #include "movement.h"
 #include <Adafruit_SCD30.h>
@@ -136,4 +137,44 @@ void updateSensors() {
   readSCD30();
 
   readIMU();
+}
+*/
+#include "sensors.h"
+#include "movement.h"
+#include <Arduino.h>
+
+// ═══════════════════════════════════════════════════════════════════════════════
+//  Sharp IR, SCD30 (CO₂/temp/humidity), and raw IMU output have been removed.
+//
+//  What remains:
+//    • Odometry output  "O,<linear_m_s>,<angular_rad_s>"  at T-ms intervals.
+//
+//  If you want to re-add the IMU later, include <Arduino_LSM6DS3.h>, call
+//  IMU.begin() in sensors_setup(), and add a readIMU() call here.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+static long t_last_sensor = 0;
+
+void sensors_setup()
+{
+    // Nothing to initialise right now.
+    // Add IMU / other peripheral init here if needed.
+}
+
+void sensors_update()
+{
+    long t_now = millis();
+
+    if (t_now - t_last_sensor >= (long)T)
+    {
+        // "O,<linear m/s>,<angular rad/s>"
+        // These are computed from the most-recent PID wheel speeds, so they
+        // update in sync with the control loop.
+        Serial.print("O,");
+        Serial.print(vehicle_speed(), 4);
+        Serial.print(",");
+        Serial.println(vehicle_omega(), 4);
+
+        t_last_sensor = t_now;
+    }
 }
