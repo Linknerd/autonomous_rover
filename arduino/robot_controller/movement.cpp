@@ -182,7 +182,7 @@ void PID()
         errorAR += error_right * (dt / 1000.0);
 
         // Clamp integral to prevent windup
-        const double INT_MAX_VAL = 1.0;
+        const double INT_MAX_VAL = 2.5;
         errorAL = constrain(errorAL, -INT_MAX_VAL, INT_MAX_VAL);
         errorAR = constrain(errorAR, -INT_MAX_VAL, INT_MAX_VAL);
     }
