@@ -33,8 +33,8 @@ BAUD_RATE    = 115200            # Must match Serial.begin() in .ino
 # Physical top speeds — set these to what your robot can actually do.
 # If the robot barely moves at vd=0.3, lower MAX_VD. If it feels sluggish,
 # raise it.  Wrong values here → PID saturation → wd has no effect.
-MAX_VD = 0.4   # [m/s]   linear  — ~0.3–0.5 is typical for a small robot
-MAX_WD = 2.0   # [rad/s] angular — ~1.5–2.5 is typical
+MAX_VD = 1.0   # [m/s]   linear  — ~0.3–0.5 is typical for a small robot
+MAX_WD = 2.5   # [rad/s] angular — ~1.5–2.5 is typical
 
 # Slew-rate limiter: how fast the commanded velocity can change per second.
 # Lower = smoother but more sluggish response.  Higher = snappier but can
