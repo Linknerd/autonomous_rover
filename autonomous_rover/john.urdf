@@ -80,7 +80,7 @@
     <origin xyz="-0.10 -0.12 0" rpy="1.57 0 0"/><axis xyz="0 0 1"/>
   </joint>
 
-  <link name="lidar_link">
+  <link name="laser">
     <collision><geometry><cylinder length="0.04" radius="0.035"/></geometry></collision>
     <visual><geometry><cylinder length="0.04" radius="0.035"/></geometry><material name="black"/></visual>
     <inertial>
@@ -89,7 +89,7 @@
   </link>
   <joint name="lidar_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="lidar_link"/>
+    <child link="laser"/>
     <origin xyz="0.08 0.05 0.08" rpy="0 0 0"/>
   </joint>
 
@@ -136,7 +136,7 @@
     </sensor>
   </gazebo>
 
-  <gazebo reference="lidar_link">
+  <gazebo reference="laser">
     <sensor name="lidar" type="ray">
       <always_on>true</always_on>
       <visualize>true</visualize>
@@ -159,7 +159,7 @@
           <remapping>~/out:=scan</remapping>
         </ros>
         <output_type>sensor_msgs/LaserScan</output_type>
-        <frame_name>lidar_link</frame_name>
+        <frame_name>laser</frame_name>
       </plugin>
     </sensor>
   </gazebo>
