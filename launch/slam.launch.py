@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 
@@ -43,27 +43,33 @@ def generate_launch_description():
         #    Executable name comes from robot_core's setup.py entry_points.
         Node(
             package='robot_core',
-            executable='serial_bridge',
+            executable='serial_bridge.py',
             name='serial_bridge',
             output='screen',
             parameters=[{'use_sim_time': False}],
         ),
 
         # 3. SLAM toolbox
-        #    Installed via apt — we include its own launch file and pass
-        #    our params file and use_sim_time as launch arguments.
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(
-                    get_package_share_directory('slam_toolbox'),
-                    'launch',
-                    'online_async_launch.py',
-                )
-            ),
-            launch_arguments={
-                'use_sim_time': 'false',
-                'params_file': slam_params,
-            }.items(),
+        #    Delayed by 5 seconds so serial_bridge has time to connect to
+        #    the Arduino and start publishing the odom TF before SLAM
+        #    begins processing scans.
+        TimerAction(
+            period=5.0,
+            actions=[
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource(
+                        os.path.join(
+                            get_package_share_directory('slam_toolbox'),
+                            'launch',
+                            'online_async_launch.py',
+                        )
+                    ),
+                    launch_arguments={
+                        'use_sim_time': 'false',
+                        'params_file': slam_params,
+                    }.items(),
+                ),
+            ],
         ),
 
     ])
