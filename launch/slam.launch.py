@@ -37,7 +37,20 @@ def generate_launch_description():
             }],
         ),
 
-        # 2. serial_bridge
+        # 2. scan_relay
+        #    The sllidar_ros2 driver publishes scan timestamps ~10x too large
+        #    due to a hardware timer bug. This node re-stamps each scan with
+        #    the current ROS time and republishes to /scan_corrected so that
+        #    SLAM toolbox's TF message filter can match scans to TF transforms.
+        Node(
+            package='robot_core',
+            executable='scan_relay.py',
+            name='scan_relay',
+            output='screen',
+            parameters=[{'use_sim_time': False}],
+        ),
+
+        # 3. serial_bridge
         #    Reads encoder data from the Arduino over serial, publishes
         #    /odom and the odom→base_footprint TF.
         #    Executable name comes from robot_core's setup.py entry_points.

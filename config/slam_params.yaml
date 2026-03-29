@@ -4,11 +4,11 @@ slam_toolbox:
     odom_frame: odom
     base_frame: base_footprint
     map_frame: map
-    scan_topic: /scan
+    scan_topic: /scan_corrected
     mode: mapping
     minimum_travel_distance: 0.2
     minimum_travel_heading: 0.2
     minimum_laser_range: 0.1
     maximum_laser_range: 12.0
     throttle_scans: 3
-    queue_size: 1
+    queue_size: 10
