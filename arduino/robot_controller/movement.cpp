@@ -249,7 +249,7 @@ void ISR_encoderL()
 
 void ISR_encoderR()
 {
-    encoder_ticksR += (digitalRead(SIGNAL_D) == HIGH) ? 1 : -1;
+    encoder_ticksR += (digitalRead(SIGNAL_D) == HIGH) ? -1 : 1;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
