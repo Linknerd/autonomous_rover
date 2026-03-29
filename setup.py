@@ -10,8 +10,12 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/urdf_publisher.launch.py']),
+        ('share/' + package_name + '/launch', [
+            'launch/urdf_publisher.launch.py',
+            'launch/slam.launch.py',
+        ]),
         ('share/' + package_name + '/urdf', ['urdf/john.urdf']),
+        ('share/' + package_name + '/config', ['config/slam_params.yaml']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
