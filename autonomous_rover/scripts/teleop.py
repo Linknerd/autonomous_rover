@@ -86,16 +86,18 @@ class TeleopNode(Node):
         # Process pygame events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                raise KeyboardInterrupt
+                self.get_logger().info("QUIT event received, ignoring...")
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                raise KeyboardInterrupt
+                self.get_logger().info("ESCAPE key pressed, exiting.")
+                raise SystemExit
             elif event.type == pygame.JOYAXISMOTION:
                 self.axes[event.axis] = event.value
             elif event.type == pygame.JOYBUTTONDOWN:
                 if event.button == BTN_ESTOP:
                     self.e_stop = True
                 elif event.button in (BTN_QUIT_A, BTN_QUIT_X):
-                    raise KeyboardInterrupt
+                    self.get_logger().info("Quit button pressed on controller.")
+                    raise SystemExit
             elif event.type == pygame.JOYBUTTONUP:
                 if event.button == BTN_ESTOP:
                     self.e_stop = False
@@ -126,7 +128,11 @@ def main(args=None):
         node = TeleopNode()
         rclpy.spin(node)
     except KeyboardInterrupt:
-        pass
+        print("Exiting manually via Ctrl+C...")
+    except SystemExit:
+        print("Exiting due to controller quit command...")
+    except Exception as e:
+        print(f"FATAL ERROR: {e}")
     finally:
         pygame.quit()
         if 'node' in locals():
