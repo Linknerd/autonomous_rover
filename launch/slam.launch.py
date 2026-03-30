@@ -44,7 +44,7 @@ def generate_launch_description():
         #    SLAM toolbox's TF message filter can match scans to TF transforms.
         Node(
             package='robot_core',
-            executable='scan_relay.py',
+            executable='scan_relay',
             name='scan_relay',
             output='screen',
             parameters=[{'use_sim_time': False}],
@@ -56,7 +56,7 @@ def generate_launch_description():
         #    Executable name comes from robot_core's setup.py entry_points.
         Node(
             package='robot_core',
-            executable='serial_bridge.py',
+            executable='serial_bridge',
             name='serial_bridge',
             output='screen',
             parameters=[{'use_sim_time': False}],
