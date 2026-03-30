@@ -30,6 +30,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'teleop = autonomous_rover.scripts.teleop:main',
         ],
     },
 )
