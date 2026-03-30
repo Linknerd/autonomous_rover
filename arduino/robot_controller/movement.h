@@ -79,8 +79,8 @@ const int  I3       = 13;  // Right motor direction A
 const int  I4       = 12;  // Right motor direction B
 
 const byte SIGNAL_A = 2;   // Left  encoder pulse  — must be an interrupt pin
-const byte SIGNAL_B = 3;   // Right encoder pulse  — must be an interrupt pin
-const byte SIGNAL_C = 4;   // Left  encoder direction
+const byte SIGNAL_B = 4;   // Right encoder pulse  — must be an interrupt pin
+const byte SIGNAL_C = 3;   // Left  encoder direction
 const byte SIGNAL_D = 5;   // Right encoder direction
 
 // ═══════════════════════════════════════════════════════════════════════════════
