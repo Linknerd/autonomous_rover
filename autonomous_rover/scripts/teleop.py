@@ -13,7 +13,7 @@ from geometry_msgs.msg import Twist
 #  CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════════════════
 
-MAX_VD = 1.0   # [m/s]   linear  — ~0.3–0.5 is typical for a small robot
+MAX_VD = 2.0   # [m/s]   linear  — original teleop used 2.0 m/s
 MAX_WD = 2.5   # [rad/s] angular — ~1.5–2.5 is typical
 
 VD_SLEW = 0.8   # [m/s  per second]
