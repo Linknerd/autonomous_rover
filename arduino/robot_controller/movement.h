@@ -87,7 +87,7 @@ const byte SIGNAL_D = 5;   // Right encoder direction
 //  ROBOT PHYSICAL CONSTANTS  ← tune these for your hardware
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const int    TPR  = 3000;    // Encoder ticks per wheel revolution
+const int    TPR  = 300;    // Encoder ticks per wheel revolution
 const double RHO  = 0.0625;  // Wheel radius [m]
 const double ELL  = 0.2775;  // Track width (centre-to-centre of wheels) [m]
 
