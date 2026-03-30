@@ -87,17 +87,11 @@ class TeleopNode(Node):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.get_logger().info("QUIT event received, ignoring...")
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.get_logger().info("ESCAPE key pressed, exiting.")
-                raise SystemExit
             elif event.type == pygame.JOYAXISMOTION:
                 self.axes[event.axis] = event.value
             elif event.type == pygame.JOYBUTTONDOWN:
                 if event.button == BTN_ESTOP:
                     self.e_stop = True
-                elif event.button in (BTN_QUIT_A, BTN_QUIT_X):
-                    self.get_logger().info("Quit button pressed on controller.")
-                    raise SystemExit
             elif event.type == pygame.JOYBUTTONUP:
                 if event.button == BTN_ESTOP:
                     self.e_stop = False
