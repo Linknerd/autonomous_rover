@@ -1,0 +1,119 @@
+[0.000000] (-) TimerEvent: {}
+[0.001270] (autonomous_rover) JobQueued: {'identifier': 'autonomous_rover', 'dependencies': OrderedDict()}
+[0.001492] (autonomous_rover) JobStarted: {'identifier': 'autonomous_rover'}
+[0.098209] (-) TimerEvent: {}
+[0.200336] (-) TimerEvent: {}
+[0.302837] (-) TimerEvent: {}
+[0.407856] (-) TimerEvent: {}
+[0.510118] (-) TimerEvent: {}
+[0.611001] (-) TimerEvent: {}
+[0.713012] (-) TimerEvent: {}
+[0.815293] (-) TimerEvent: {}
+[0.916375] (-) TimerEvent: {}
+[1.018367] (-) TimerEvent: {}
+[1.119526] (-) TimerEvent: {}
+[1.221564] (-) TimerEvent: {}
+[1.322732] (-) TimerEvent: {}
+[1.425134] (-) TimerEvent: {}
+[1.527158] (-) TimerEvent: {}
+[1.628364] (-) TimerEvent: {}
+[1.733994] (-) TimerEvent: {}
+[1.834958] (-) TimerEvent: {}
+[1.936136] (-) TimerEvent: {}
+[2.038059] (-) TimerEvent: {}
+[2.138964] (-) TimerEvent: {}
+[2.242351] (-) TimerEvent: {}
+[2.344285] (-) TimerEvent: {}
+[2.447693] (-) TimerEvent: {}
+[2.548993] (-) TimerEvent: {}
+[2.651443] (-) TimerEvent: {}
+[2.754714] (-) TimerEvent: {}
+[2.857103] (-) TimerEvent: {}
+[2.959340] (-) TimerEvent: {}
+[3.061221] (-) TimerEvent: {}
+[3.163166] (-) TimerEvent: {}
+[3.266003] (-) TimerEvent: {}
+[3.368062] (-) TimerEvent: {}
+[3.469681] (-) TimerEvent: {}
+[3.572246] (-) TimerEvent: {}
+[3.673499] (-) TimerEvent: {}
+[3.775991] (-) TimerEvent: {}
+[3.877530] (-) TimerEvent: {}
+[3.979943] (-) TimerEvent: {}
+[4.081354] (-) TimerEvent: {}
+[4.184825] (-) TimerEvent: {}
+[4.287332] (-) TimerEvent: {}
+[4.389610] (-) TimerEvent: {}
+[4.492150] (-) TimerEvent: {}
+[4.593947] (-) TimerEvent: {}
+[4.695024] (-) TimerEvent: {}
+[4.796757] (-) TimerEvent: {}
+[4.899414] (-) TimerEvent: {}
+[5.000821] (-) TimerEvent: {}
+[5.102829] (-) TimerEvent: {}
+[5.204136] (-) TimerEvent: {}
+[5.306261] (-) TimerEvent: {}
+[5.407373] (-) TimerEvent: {}
+[5.508313] (-) TimerEvent: {}
+[5.609197] (-) TimerEvent: {}
+[5.710928] (-) TimerEvent: {}
+[5.813019] (-) TimerEvent: {}
+[5.914000] (-) TimerEvent: {}
+[6.015681] (-) TimerEvent: {}
+[6.117565] (-) TimerEvent: {}
+[6.219715] (-) TimerEvent: {}
+[6.243418] (autonomous_rover) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', 'build/autonomous_rover', 'build', '--build-base', '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build', 'install', '--record', '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/johntherover/ros2_ws/src/autonomous_rover', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'johntherover', 'SSH_AGENT_PID': '1830', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/johntherover', 'OLDPWD': '/home/johntherover/ros2_ws/src/autonomous_rover/autonomous_rover', 'DESKTOP_SESSION': 'xfce', 'ROS_PYTHON_VERSION': '3', 'XRDP_PULSE_SOURCE_SOCKET': 'xrdp_chansrv_audio_in_socket_10', 'XRDP_PULSE_SINK_SOCKET': 'xrdp_chansrv_audio_out_socket_10', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'TERMINATOR_DBUS_NAME': 'net.tenshu.Terminator2bcb3aa092f2b6032576f3fd56ad9afe9', 'PULSE_SCRIPT': '/etc/xrdp/pulse/default.pa', 'ROS_DISTRO': 'humble', 'GTK_IM_MODULE': 'ibus', 'LOGNAME': 'johntherover', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': 'c1', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'SESSION_MANAGER': 'local/johntherover:@/tmp/.ICE-unix/1848,unix/johntherover:/tmp/.ICE-unix/1848', 'XDG_MENU_PREFIX': 'xfce-', 'XRDP_SOCKET_PATH': '/run/xrdp/sockdir', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':10.0', 'TERMINATOR_DBUS_PATH': '/net/tenshu/Terminator2', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'XFCE', 'IBUS_DISABLE_SNOOPER': '1', 'XMODIFIERS': '@im=ibus', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SSH_AUTH_SOCK': '/tmp/ssh-XXXXXXBDAOgg/agent.1734', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'UID': '1000', 'SHELL': '/bin/bash', 'TERMINATOR_UUID': 'urn:uuid:6bfe887c-9b38-44b2-85cc-ee7e3843a4a6', 'QT_ACCESSIBILITY': '1', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'XRDP_SESSION': '1', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg', 'CLUTTER_IM_MODULE': 'ibus', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share', 'PYTHONPATH': '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'VTE_VERSION': '6800'}, 'shell': False}
+[6.320513] (-) TimerEvent: {}
+[6.424296] (-) TimerEvent: {}
+[6.525647] (-) TimerEvent: {}
+[6.628093] (-) TimerEvent: {}
+[6.730764] (-) TimerEvent: {}
+[6.834741] (-) TimerEvent: {}
+[6.936004] (-) TimerEvent: {}
+[7.038507] (-) TimerEvent: {}
+[7.140861] (-) TimerEvent: {}
+[7.243541] (-) TimerEvent: {}
+[7.344904] (-) TimerEvent: {}
+[7.448599] (-) TimerEvent: {}
+[7.550817] (-) TimerEvent: {}
+[7.652588] (-) TimerEvent: {}
+[7.757334] (-) TimerEvent: {}
+[7.859199] (-) TimerEvent: {}
+[7.965560] (-) TimerEvent: {}
+[8.069220] (-) TimerEvent: {}
+[8.170569] (-) TimerEvent: {}
+[8.272553] (-) TimerEvent: {}
+[8.373359] (-) TimerEvent: {}
+[8.474658] (-) TimerEvent: {}
+[8.578809] (-) TimerEvent: {}
+[8.679646] (-) TimerEvent: {}
+[8.781149] (-) TimerEvent: {}
+[8.842175] (autonomous_rover) StdoutLine: {'line': b'running egg_info\n'}
+[8.845449] (autonomous_rover) StdoutLine: {'line': b'writing build/autonomous_rover/autonomous_rover.egg-info/PKG-INFO\n'}
+[8.846916] (autonomous_rover) StdoutLine: {'line': b'writing dependency_links to build/autonomous_rover/autonomous_rover.egg-info/dependency_links.txt\n'}
+[8.847941] (autonomous_rover) StdoutLine: {'line': b'writing entry points to build/autonomous_rover/autonomous_rover.egg-info/entry_points.txt\n'}
+[8.849512] (autonomous_rover) StdoutLine: {'line': b'writing requirements to build/autonomous_rover/autonomous_rover.egg-info/requires.txt\n'}
+[8.852104] (autonomous_rover) StdoutLine: {'line': b'writing top-level names to build/autonomous_rover/autonomous_rover.egg-info/top_level.txt\n'}
+[8.863077] (autonomous_rover) StdoutLine: {'line': b"reading manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'\n"}
+[8.864948] (autonomous_rover) StdoutLine: {'line': b"adding license file 'LICENSE'\n"}
+[8.870986] (autonomous_rover) StdoutLine: {'line': b"writing manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'\n"}
+[8.875321] (autonomous_rover) StdoutLine: {'line': b'running build\n'}
+[8.882611] (-) TimerEvent: {}
+[8.883557] (autonomous_rover) StdoutLine: {'line': b'running build_py\n'}
+[8.884244] (autonomous_rover) StdoutLine: {'line': b'running install\n'}
+[8.884701] (autonomous_rover) StdoutLine: {'line': b'running install_lib\n'}
+[8.890530] (autonomous_rover) StdoutLine: {'line': b'running install_data\n'}
+[8.895610] (autonomous_rover) StdoutLine: {'line': b'running install_egg_info\n'}
+[8.920481] (autonomous_rover) StdoutLine: {'line': b"removing '/home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[8.927768] (autonomous_rover) StdoutLine: {'line': b'Copying build/autonomous_rover/autonomous_rover.egg-info to /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover-0.0.0-py3.10.egg-info\n'}
+[8.936759] (autonomous_rover) StdoutLine: {'line': b'running install_scripts\n'}
+[8.982911] (-) TimerEvent: {}
+[9.080911] (autonomous_rover) StdoutLine: {'line': b'Installing teleop script to /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/autonomous_rover\n'}
+[9.083155] (-) TimerEvent: {}
+[9.084847] (autonomous_rover) StdoutLine: {'line': b"writing list of installed files to '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/install.log'\n"}
+[9.183591] (-) TimerEvent: {}
+[9.285520] (-) TimerEvent: {}
+[9.345632] (autonomous_rover) CommandEnded: {'returncode': 0}
+[9.387711] (-) TimerEvent: {}
+[9.443604] (autonomous_rover) JobEnded: {'identifier': 'autonomous_rover', 'rc': 0}
+[9.455692] (-) EventReactorShutdown: {}

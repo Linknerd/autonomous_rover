@@ -1,0 +1,42 @@
+[7.076s] Invoking command in '/home/johntherover/ros2_ws/src/autonomous_rover': PYTHONPATH=/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/autonomous_rover build --build-base /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build install --record /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/install.log --single-version-externally-managed install_data
+[9.624s] running egg_info
+[9.627s] creating build/autonomous_rover/autonomous_rover.egg-info
+[9.629s] writing build/autonomous_rover/autonomous_rover.egg-info/PKG-INFO
+[9.631s] writing dependency_links to build/autonomous_rover/autonomous_rover.egg-info/dependency_links.txt
+[9.632s] writing entry points to build/autonomous_rover/autonomous_rover.egg-info/entry_points.txt
+[9.632s] writing requirements to build/autonomous_rover/autonomous_rover.egg-info/requires.txt
+[9.633s] writing top-level names to build/autonomous_rover/autonomous_rover.egg-info/top_level.txt
+[9.635s] writing manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'
+[9.649s] reading manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'
+[9.655s] adding license file 'LICENSE'
+[9.656s] writing manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'
+[9.657s] running build
+[9.657s] running build_py
+[9.658s] creating /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build
+[9.659s] creating /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib
+[9.660s] creating /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib/autonomous_rover
+[9.660s] copying autonomous_rover/__init__.py -> /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib/autonomous_rover
+[9.662s] running install
+[9.667s] running install_lib
+[9.677s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover
+[9.679s] copying /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib/autonomous_rover/__init__.py -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover
+[9.681s] byte-compiling /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover/__init__.py to __init__.cpython-310.pyc
+[9.683s] running install_data
+[9.683s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index
+[9.684s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index/resource_index
+[9.685s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index/resource_index/packages
+[9.685s] copying resource/autonomous_rover -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index/resource_index/packages
+[9.686s] copying package.xml -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover
+[9.694s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/launch
+[9.696s] copying launch/urdf_publisher.launch.py -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/launch
+[9.700s] copying launch/slam.launch.py -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/launch
+[9.702s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/urdf
+[9.703s] copying urdf/john.urdf -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/urdf
+[9.709s] creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/config
+[9.710s] copying config/slam_params.yaml -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/config
+[9.715s] running install_egg_info
+[9.731s] Copying build/autonomous_rover/autonomous_rover.egg-info to /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover-0.0.0-py3.10.egg-info
+[9.739s] running install_scripts
+[9.900s] Installing teleop script to /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/autonomous_rover
+[9.912s] writing list of installed files to '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/install.log'
+[10.125s] Invoked command in '/home/johntherover/ros2_ws/src/autonomous_rover' returned '0': PYTHONPATH=/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/autonomous_rover build --build-base /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build install --record /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/install.log --single-version-externally-managed install_data

@@ -1,0 +1,40 @@
+running egg_info
+creating build/autonomous_rover/autonomous_rover.egg-info
+writing build/autonomous_rover/autonomous_rover.egg-info/PKG-INFO
+writing dependency_links to build/autonomous_rover/autonomous_rover.egg-info/dependency_links.txt
+writing entry points to build/autonomous_rover/autonomous_rover.egg-info/entry_points.txt
+writing requirements to build/autonomous_rover/autonomous_rover.egg-info/requires.txt
+writing top-level names to build/autonomous_rover/autonomous_rover.egg-info/top_level.txt
+writing manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'
+reading manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'build/autonomous_rover/autonomous_rover.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build
+creating /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib
+creating /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib/autonomous_rover
+copying autonomous_rover/__init__.py -> /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib/autonomous_rover
+running install
+running install_lib
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover
+copying /home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/build/lib/autonomous_rover/__init__.py -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover
+byte-compiling /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index/resource_index
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index/resource_index/packages
+copying resource/autonomous_rover -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/ament_index/resource_index/packages
+copying package.xml -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/launch
+copying launch/urdf_publisher.launch.py -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/launch
+copying launch/slam.launch.py -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/launch
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/urdf
+copying urdf/john.urdf -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/urdf
+creating /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/config
+copying config/slam_params.yaml -> /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/share/autonomous_rover/config
+running install_egg_info
+Copying build/autonomous_rover/autonomous_rover.egg-info to /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/python3.10/site-packages/autonomous_rover-0.0.0-py3.10.egg-info
+running install_scripts
+Installing teleop script to /home/johntherover/ros2_ws/src/autonomous_rover/install/autonomous_rover/lib/autonomous_rover
+writing list of installed files to '/home/johntherover/ros2_ws/src/autonomous_rover/build/autonomous_rover/install.log'
