@@ -44,7 +44,7 @@ def generate_launch_description():
         #    SLAM toolbox's TF message filter can match scans to TF transforms.
         Node(
             package='robot_core',
-            executable='scan_relay',
+            executable='scan_relay.py',
             name='scan_relay',
             output='screen',
             parameters=[{'use_sim_time': False}],
