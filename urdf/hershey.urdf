@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot name="hershey">
+
+  <material name="dark_grey"><color rgba="0.2 0.2 0.2 1.0"/></material>
+  <material name="black"><color rgba="0.0 0.0 0.0 1.0"/></material>
+  <material name="silver"><color rgba="0.75 0.75 0.75 1.0"/></material>
+  <material name="pcb_green"><color rgba="0.0 0.5 0.0 1.0"/></material>
+  <material name="arduino_blue"><color rgba="0.0 0.4 0.6 1.0"/></material>
+
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.2476 0.2032 0.1016"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="dark_grey"/>
+    </visual>
+  </link>
+
+  <link name="Front_left_wheel"><visual><geometry><cylinder radius="0.0603" length="0.08"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="black"/></visual></link>
+  <link name="Front_right_wheel"><visual><geometry><cylinder radius="0.0603" length="0.08"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="black"/></visual></link>
+  <link name="Back_left_wheel"><visual><geometry><cylinder radius="0.0603" length="0.08"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="black"/></visual></link>
+  <link name="Back_right_wheel"><visual><geometry><cylinder radius="0.0603" length="0.08"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="black"/></visual></link>
+  <link name="Front_left_axle"><visual><geometry><cylinder radius="0.01" length="0.005"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="silver"/></visual></link>
+  <link name="Front_right_axle"><visual><geometry><cylinder radius="0.01" length="0.005"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="silver"/></visual></link>
+  <link name="Back_left_axle"><visual><geometry><cylinder radius="0.01" length="0.005"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="silver"/></visual></link>
+  <link name="Back_right_axle"><visual><geometry><cylinder radius="0.01" length="0.005"/></geometry><origin xyz="0 0 0" rpy="1.5708 0 0"/><material name="silver"/></visual></link>
+
+  <link name="laser_stand">
+    <visual><geometry><cylinder radius="0.005" length="0.04"/></geometry><origin xyz="0.03 0 0.02" rpy="0 0 0"/><material name="silver"/></visual>
+    <visual><geometry><cylinder radius="0.005" length="0.04"/></geometry><origin xyz="-0.015 0.026 0.02" rpy="0 0 0"/><material name="silver"/></visual>
+    <visual><geometry><cylinder radius="0.005" length="0.04"/></geometry><origin xyz="-0.015 -0.026 0.02" rpy="0 0 0"/><material name="silver"/></visual>
+  </link>
+
+  <link name="laser">
+    <visual><geometry><cylinder radius="0.05" length="0.04"/></geometry><origin xyz="0 0 0.02" rpy="0 0 0"/><material name="black"/></visual>
+  </link>
+
+  <link name="raspberry_pi">
+    <visual><geometry><box size="0.085 0.056 0.02"/></geometry><origin xyz="0 0 0.01" rpy="0 0 0"/><material name="pcb_green"/></visual>
+  </link>
+
+  <link name="arduino_uno">
+    <visual><geometry><box size="0.0686 0.0534 0.015"/></geometry><origin xyz="0 0 0.0075" rpy="0 0 0"/><material name="arduino_blue"/></visual>
+  </link>
+
+  <link name="imu_link">
+    <visual><geometry><box size="0.005 0.005 0.002"/></geometry><origin xyz="0 0 0" rpy="0 0 0"/><material name="black"/></visual>
+  </link>
+
+  <joint name="Front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="Front_left_wheel"/>
+    <origin xyz="-0.1111 0.1466 -0.01" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="Front_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="Front_right_wheel"/>
+    <origin xyz="-0.1111 -0.1466 -0.01" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="Back_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="Back_left_wheel"/>
+    <origin xyz="0.1111 0.1466 -0.01" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="Back_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="Back_right_wheel"/>
+    <origin xyz="0.1111 -0.1466 -0.01" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="Front_left_axle_joint" type="fixed"><parent link="Front_left_wheel"/><child link="Front_left_axle"/><origin xyz="0 -0.0425 0" rpy="0 0 0"/></joint>
+  <joint name="Front_right_axle_joint" type="fixed"><parent link="Front_right_wheel"/><child link="Front_right_axle"/><origin xyz="0 0.0425 0" rpy="0 0 0"/></joint>
+  <joint name="Back_left_axle_joint" type="fixed"><parent link="Back_left_wheel"/><child link="Back_left_axle"/><origin xyz="0 -0.0425 0" rpy="0 0 0"/></joint>
+  <joint name="Back_right_axle_joint" type="fixed"><parent link="Back_right_wheel"/><child link="Back_right_axle"/><origin xyz="0 0.0425 0" rpy="0 0 0"/></joint>
+
+  <joint name="laser_stand_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_stand"/>
+    <origin xyz="-0.07 0.05 0.0508" rpy="0 0 0"/> </joint>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="laser_stand"/>
+    <child link="laser"/>
+    <origin xyz="0 0 0.04" rpy="0 0 3.14159"/> </joint>
+
+  <joint name="arduino_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="arduino_uno"/>
+    <origin xyz="0.08 0.05 0.0508" rpy="0 0 0"/> </joint>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="arduino_uno"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.008" rpy="0 0 0"/> </joint>
+
+  <joint name="pi_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="raspberry_pi"/>
+    <origin xyz="0.08 -0.05 0.0508" rpy="0 0 0"/> </joint>
+
+</robot>

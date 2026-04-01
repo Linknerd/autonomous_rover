@@ -26,7 +26,7 @@ const byte SIGNAL_D = 5;   // Right encoder pulse B (Interrupt for 4X)
 // [DEBUG] Originally 300 TPR for 1X decoding. Now using 4X decoding, yielding 1200 ticks per revolution. 
 // If your specification states "3000 TPR" for the motor output shaft in 4X, leave this at 3000.
 // // const int TPR = 3000;
-const int    TPR  = 3000;    // Ticks per wheel revolution (Assuming full 4X resolution)
+const int    TPR  = 12000;    // Ticks per wheel revolution (Assuming full 4X resolution)
 const double RHO  = 0.0625;  // Wheel radius [m]
 const double ELL  = 0.2775;  // Track width [m]
 
