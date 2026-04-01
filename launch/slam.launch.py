@@ -64,7 +64,7 @@ def generate_launch_description():
 
         Node(
             package='robot_core',
-            executable='serial_bridge_debug',
+            executable='serial_bridge_debug.py',
             name='serial_bridge_debug',
             output='screen',
             parameters=[{'use_sim_time': False}],
