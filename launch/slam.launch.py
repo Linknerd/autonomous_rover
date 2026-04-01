@@ -54,14 +54,21 @@ def generate_launch_description():
         #    Reads encoder data from the Arduino over serial, publishes
         #    /odom and the odom→base_footprint TF.
         #    Executable name comes from robot_core's setup.py entry_points.
+        # Node(
+        #     package='robot_core',
+        #     executable='serial_bridge',
+        #     name='serial_bridge',
+        #     output='screen',
+        #     parameters=[{'use_sim_time': False}],
+        # ),
+
         Node(
             package='robot_core',
-            executable='serial_bridge',
-            name='serial_bridge',
+            executable='serial_bridge_debug',
+            name='serial_bridge_debug',
             output='screen',
             parameters=[{'use_sim_time': False}],
         ),
-
         # 3. SLAM toolbox
         #    Delayed by 5 seconds so serial_bridge has time to connect to
         #    the Arduino and start publishing the odom TF before SLAM
