@@ -17,6 +17,8 @@ static String cmdBuf = "";
 
 static const float VD_CHANGE_THRESH = 0.05f;   // [m/s]
 static const float WD_CHANGE_THRESH = 0.10f;   // [rad/s]
+// Tracking Variable Debug
+static long last_command_time = 0;
 
 void processCommand(const String& cmd)
 {
@@ -42,6 +44,8 @@ void processCommand(const String& cmd)
 
         vd = new_vd;
         wd = new_wd;
+
+        last_command_time = millis();
     }
     else if (prefix == 'S')
     {
@@ -66,6 +70,14 @@ void setup()
 
 void loop()
 {
+    if (millis() - last_command_time > 500) {
+        if (fabs(vd) > 0.001 || fabs(wd) > 0.001) {
+            vd = 0.0f;
+            wd = 0.0f;
+            reset_integrators();
+        }
+    }
+    
     PID_update();
     sensors_update();
 
