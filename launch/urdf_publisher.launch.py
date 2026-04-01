@@ -8,7 +8,8 @@ def generate_launch_description():
     urdf_file = os.path.join(
         get_package_share_directory('autonomous_rover'),
         'urdf',
-        'john.urdf'
+        # 'john.urdf'
+        'hershey.urdf'
     )
 
     with open(urdf_file, 'r') as f:
