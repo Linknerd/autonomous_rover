@@ -13,12 +13,12 @@ from geometry_msgs.msg import Twist
 #  CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════════════════
 
-MAX_VD = 2.0   # [m/s]   linear  — original teleop used 2.0 m/s
-MAX_WD = 2.5   # [rad/s] angular — ~1.5–2.5 is typical
+MAX_VD = 0.2   # [m/s]   linear  — original teleop used 2.0 m/s
+MAX_WD = 2.0   # [rad/s] angular — ~1.5–2.5 is typical
 
 VD_SLEW = 0.8   # [m/s  per second]
 WD_SLEW = 4.0   # [rad/s per second]
-DEADZONE     = 0.12   # Fraction of full stick travel to ignore
+DEADZONE     = 0.05   # Fraction of full stick travel to ignore
 CONTROL_HZ   = 30     # Loop rate [Hz]
 
 # Gamepad axis indices (Logitech F710, D-mode, pygame)
